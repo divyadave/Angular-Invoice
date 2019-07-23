@@ -1,0 +1,34 @@
+<nav>
+        <a routerLink="/list">Product List</a>
+        <a class="uk-margin-left" routerLink="/invoice">Invoice</a>
+      </nav>
+<h4>Products Form</h4>
+<form [formGroup]="productForm" class="uk-form-horizontal uk-margin-large">
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Product Name</label>
+        <div class="uk-form-controls">
+            <input class="uk-input uk-width-1-3" id="form-horizontal-text" type="text" formControlName="productName" placeholder="Enter Product Name">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-select">Price</label>
+        <div class="uk-form-controls">
+            
+            <input class="uk-input uk-width-1-3" id="price" formControlName="price" type="number" /><span class="uk-margin-left">₹</span>
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <div class="uk-form-label">Quantity</div>
+        <div class="uk-form-controls uk-form-controls-text">
+            <input class="uk-input uk-width-1-3" type="number" formControlName="qty" name="quantity" min="1" max="10">
+        </div>
+    </div>
+    <div class="product uk-margin-large-left uk-margin-xlarge-left">
+    <button class="uk-button-default uk-button-small uk-margin-left uk-button-primary" id="create" (click)="addProduct()" type="submit">Add</button>
+    </div>
+
+</form>
+<!-- <app-product-list (passData)="displayEdit($event)"></app-product-list> -->

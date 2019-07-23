@@ -1,0 +1,124 @@
+<h4>Invoice Form</h4>
+<form  class="uk-form-horizontal uk-margin-large">
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Company Name</label>
+        <div class="uk-form-controls">
+            <input class="uk-input uk-width-1-3" id="form-horizontal-text" type="text" placeholder="Enter Company Name">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-select">Contact Number</label>
+        <div class="uk-form-controls">
+
+            <input class="uk-input uk-width-1-3" id="contact" type="text" />
+        </div>
+    </div>
+    <form [formGroup]="invoiceForm" class="invoice">
+        <div formArrayName="invoiceItems">
+            <table class="uk-table uk-table-justify">
+                <thead>
+                    <tr>
+                        <th class="uk-width-small">Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th><button class="uk-button-danger" (click)="addItems()">+</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of invoiceForm.get('invoiceItems').controls; let i=index" [formGroupName]="i">
+                        <td>
+                            <div>
+                                <select (change)="onChange($event.target.value)" name="invoiceSelect"
+                                    formControlName="invoiceSelect" class="uk-select uk-margin-top ">
+                                    <option *ngFor="let productDetail of product; let productIndex=index"
+                                        [value]="productIndex">
+                                        {{ productDetail.productName }} </option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input class="uk-input uk-margin-top uk-margin-right" type="number" name="quantity"
+                                    formControlName="qty" />
+                                <div *ngIf="invoiceForm.get('invoiceItems').controls[i].controls.qty.touched && ( invoiceForm.get('invoiceItems').controls[i].controls.qty.invalid ) && ( invoiceForm.get('invoiceItems').controls[i].controls.qty.errors?.max)"
+                                    class="uk-text-danger">
+                                    Stock is unavaialble
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="uk-width-1-2@s">
+                                <input class="uk-input uk-margin-right uk-margin-top" id="price" name="price"
+                                    formControlName="price" type="number"
+                                    [(ngModel)]="product.length === 0 ? tempPrice: product[j]['price']" readonly/>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="uk-margin-top">
+                                <p>
+                                    {{ item.value.qty * item.value.price | currency }}
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="uk-margin-top">
+                                <button class="uk-button-danger" (click)="removeItems(item)">-</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <div class="uk-margin-top uk-margin-xlarge-right">
+                                <p>SubTotal: {{ subTotal | currency }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                                <div class="uk-margin-xlarge-right">
+                                    <p>Tax: {{ totalTax | currency }}</p>
+                                </div>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <div class="uk-margin-small-right">
+                                <p>Grand Total: {{ grantTotal | currency }}</p>
+                            </div>
+                        </td>
+
+                    </tr>
+                
+                </tbody>
+            </table>
+            <div><button class="uk-button-success" (click)="onSubmit()">Save</button></div>
+        </div>
+
+
+
+    </form>
+</form>

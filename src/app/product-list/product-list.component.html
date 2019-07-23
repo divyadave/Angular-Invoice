@@ -1,0 +1,30 @@
+<table class="uk-table">
+    <caption class="uk-text-uppercase">Product List</caption>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let productDetail of product" >
+            <td>{{ productDetail.productName}}</td>
+            <td>{{ productDetail.price}}</td>
+            <td>{{ productDetail.qty}}</td>
+            <td uk-toggle="target: #productDetail" (click)="read(productDetail)"><button class="uk-button-default uk-button-small  uk-button-secondary" id="read">Read</button>
+            <td><button class="uk-button-default uk-button-small uk-button-primary" id="update" (click)="edit(productDetail)">Update</button></td>
+            <td><button class="uk-button-default uk-button-small  uk-button-danger" id="delete" (click)="delete(productDetail.id)">Delete</button></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="productDetail" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Product Details</h2>
+        <app-product-read-details [selectedDetail]="selectedProduct"></app-product-read-details>
+    </div>
+</div>
